@@ -1,11 +1,10 @@
 # Defaults
 TITLE='ebook'
-EPUB='false'
+EPUB='true'
 PDF='false'
-MOBI='false'
 HTML='false'
 ZIP='false'
-ALL='true'
+ALL='false'
 COVER='false'
 
 # Merge options into defaults
@@ -16,7 +15,6 @@ in
 t) TITLE=${OPTARG};;
 e) EPUB='true' ALL='false';;
 p) PDF='true' ALL='false';;
-m) MOBI='true' ALL='false';;
 h) HTML='true' ALL='false';;
 h) ZIP='true';;
 a) ALL='true';;
@@ -46,16 +44,6 @@ if [ $ALL == 'true' ] || [ $PDF == 'true' ] ; then
 	rm $TITLE-temp.pdf
 fi
 
-# MOBI
-if [ $ALL == 'true' ] || [ $MOBI == 'true' ] ; then
-	if [ $ALL == 'true' ] || [ $EPUB == 'true' ] ; then
-		ebook-convert $TITLE.epub $TITLE.mobi
-	else
-		echo "WARNING: MOBI format can only be created is EPUB is also created"
-	fi
-
-fi
-
 # HTML
 if [ $ALL == 'true' ] || [ $HTML == 'true' ] ; then
 	pandoc -H assets/pandoc-before.css -H assets/pandoc.css -H assets/pdf-overrides.css -H assets/pandoc-after.css assets/title.md assets/toc.md chapters/*.md assets/scripts.md -o $TITLE.html -t html5+smart --metadata pagetitle="$TITLE"
@@ -64,7 +52,7 @@ fi
 # Zip
 if [ $ALL == 'true' ] || [ $ZIP == 'true' ] ; then
 	if [ $ALL == 'true' ] ; then
-		zip $TITLE.zip $TITLE.epub $TITLE.mobi $TITLE.pdf $TITLE.html
+		zip $TITLE.zip $TITLE.epub $TITLE.pdf $TITLE.html
 	else
 		echo "WARNING: ZIP file can only be created if all other formats are also supported"
 	fi

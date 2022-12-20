@@ -1,5 +1,5 @@
 # Ebook Boilerplate
-A lightweight boilerplate for self-publishing ebooks with markdown and command line. The ebook boilerplate transforms markdown files into PDF, EPUB, MOBI, and HTML files, *and* provides a zipped version with all four.
+A lightweight boilerplate for self-publishing ebooks with markdown and command line. The ebook boilerplate transforms markdown files into PDF, EPUB, and HTML files, *and* provides a zipped version with all four.
 
 *__Note:__ This works in MacOS, but has not been tested in Windows. At a minimum, the `zip` command will not work and will need to be set to `false`.*
 
@@ -47,12 +47,11 @@ There are two ways to configure the Ebook Boilerplate:
 ```bash
 # Defaults
 TITLE='ebook' # the title/filename
-EPUB='false'  # if true, publish an EPUB version
+EPUB='true'  # if true, publish an EPUB version
 PDF='false'   # if true, publish a PDF
-MOBI='false'  # if true, publish a MOBI version
 HTML='false'  # if true, public an HTML version
 ZIP='false'   # if true, create a zip file
-ALL='true'    # if true publish all formats (regardless of other settings)
+ALL='false'    # if true publish all formats (regardless of other settings)
 COVER='false' # if true, add a cover for the PDF version
 ```
 
@@ -62,7 +61,6 @@ COVER='false' # if true, add a cover for the PDF version
 - **`-e`** - If enabled, generate an EPUB.
 - **`-p`** - If enabled, generate a PDF.
 - **`-c`** - If enabled, add a cover to the PDF file.
-- **`-m`** - If enabled, generate a MOBI file.
 - **`-h`** - If enabled, generate an HTML file.
 - **`-z`** - If enabled, generate a zip file (requires all four other file types to work).
 - **`-a`** - If enabled, generate all file types (defaults to `true`).
@@ -100,7 +98,7 @@ sh build.sh -c
 ## Quirks and Other Issues
 
 1. I use wkhtmltopdf instead of LaTeX because it lets you style PDFs with CSS, giving you much more control over how things look.
-2. I don't apply any CSS to the EPUB and MOBI formats. I've had better support across a wider range of ereaders by letting them just use their default styles.
+2. I don't apply any CSS to the EPUB format. I've had better support across a wider range of ereaders by letting them just use their default styles.
 3. wkhtmltopdf does not add page numbers to the generated PDF, and I've yet to find a way to make it do so.
 4. You **must** include an empty line before youR `h2` page-level markdown headers (ex. `## Chapter Title`) or Pandoc will just skip it when creating your file. No idea why.
 5. Break tags (`<br/>`) must include the self-closing slash (ie. don't do this: `<br>`) or they'll throw an error, even though slashless is valid HTML5.
